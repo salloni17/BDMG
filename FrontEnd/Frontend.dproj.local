@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2024/06/08 15:20:33.000.601,=C:\Users\Montreal\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2024/06/08 15:21:02.000.351,=C:\Users\Montreal\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2024/06/08 15:24:35.000.465,C:\Users\Montreal\Desktop\FrontEnd\uffrmMenuPrincipal.dfm=C:\Users\Montreal\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2024/06/08 15:24:35.000.465,C:\Users\Montreal\Desktop\FrontEnd\uffrmMenuPrincipal.pas=C:\Users\Montreal\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2024/06/08 15:25:00.000.777,C:\Users\Montreal\Desktop\ProjetoBDMG.dproj=C:\Users\Montreal\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2024/06/08 15:32:38.000.016,=C:\Users\Montreal\Desktop\BDMG\FrontEnd\Formularios\uffrmMenuPrincipal.pas</Transaction>
+    <Transaction>2024/06/08 15:33:05.000.110,=C:\Users\Montreal\Desktop\BDMG\FrontEnd\Unit2.pas</Transaction>
+    <Transaction>2024/06/08 15:33:35.000.313,C:\Users\Montreal\Desktop\BDMG\FrontEnd\Formularios\ufrmLogin.dfm=C:\Users\Montreal\Desktop\BDMG\FrontEnd\Unit2.dfm</Transaction>
+    <Transaction>2024/06/08 15:33:35.000.313,C:\Users\Montreal\Desktop\BDMG\FrontEnd\Formularios\ufrmLogin.pas=C:\Users\Montreal\Desktop\BDMG\FrontEnd\Unit2.pas</Transaction>
+    <Transaction>2024/06/08 16:47:41.000.015,=C:\Users\Montreal\Desktop\BDMG\FrontEnd\Unit1.pas</Transaction>
+    <Transaction>2024/06/08 16:48:23.000.516,C:\Users\Montreal\Desktop\BDMG\FrontEnd\Units\uRest.pas=C:\Users\Montreal\Desktop\BDMG\FrontEnd\Unit1.pas</Transaction>
+    <Transaction>2024/06/08 18:29:09.000.189,C:\Users\Montreal\Desktop\BDMG\FrontEnd\Formularios\uffrmMenuPrincipal.pas=C:\Users\Montreal\Desktop\BDMG\FrontEnd\Formularios\ufrmMenuPrincipal.pas</Transaction>
+    <Transaction>2024/06/08 18:29:09.000.189,C:\Users\Montreal\Desktop\BDMG\FrontEnd\Formularios\uffrmMenuPrincipal.dfm=C:\Users\Montreal\Desktop\BDMG\FrontEnd\Formularios\ufrmMenuPrincipal.dfm</Transaction>
+    <Transaction>2024/06/08 18:50:04.000.947,=C:\Users\Montreal\Desktop\BDMG\FrontEnd\Unit1.pas</Transaction>
+    <Transaction>2024/06/08 18:50:13.000.697,C:\Users\Montreal\Desktop\BDMG\FrontEnd\Formularios\ufrmTarefas.dfm=C:\Users\Montreal\Desktop\BDMG\FrontEnd\Unit1.dfm</Transaction>
+    <Transaction>2024/06/08 18:50:13.000.697,C:\Users\Montreal\Desktop\BDMG\FrontEnd\Formularios\ufrmTarefas.pas=C:\Users\Montreal\Desktop\BDMG\FrontEnd\Unit1.pas</Transaction>
+    <Transaction>2024/06/09 11:11:57.000.385,=C:\Users\Montreal\Desktop\BDMG\FrontEnd\Unit1.pas</Transaction>
+    <Transaction>2024/06/09 11:58:29.000.380,C:\Users\Montreal\Desktop\BDMG\FrontEnd\ProjetoBDMG.dproj=C:\Users\Montreal\Desktop\BDMG\FrontEnd\Frontend.dproj</Transaction>
+    <Transaction>2024/06/09 15:00:00.000.977,=C:\Users\Montreal\Desktop\BDMG\FrontEnd\Unit1.pas</Transaction>
+    <Transaction>2024/06/09 15:00:13.000.462,C:\Users\Montreal\Desktop\BDMG\FrontEnd\Formularios\ufrmGraficos.pas=C:\Users\Montreal\Desktop\BDMG\FrontEnd\Unit1.pas</Transaction>
+    <Transaction>2024/06/09 15:00:13.000.462,C:\Users\Montreal\Desktop\BDMG\FrontEnd\Formularios\ufrmGraficos.dfm=C:\Users\Montreal\Desktop\BDMG\FrontEnd\Unit1.dfm</Transaction>
+  </Transactions>  <ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="Formularios"/>
+    <File Path="Formularios\ufrmGraficos.pas"/>
+    <File Path="Formularios\ufrmGraficos.dfm"/>
+    <File Path="Formularios\ufrmLogin.pas"/>
+    <File Path="Formularios\ufrmLogin.dfm"/>
+    <File Path="Formularios\ufrmMenuPrincipal.pas"/>
+    <File Path="Formularios\ufrmMenuPrincipal.dfm"/>
+    <File Path="Formularios\ufrmTarefas.pas"/>
+    <File Path="Formularios\ufrmTarefas.dfm"/>
+    <File Path="Units"/>
+    <File Path="Units\uRest.pas"/>
+  </ProjectSortOrder>
+</BorlandProject>

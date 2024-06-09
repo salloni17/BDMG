@@ -1,0 +1,16 @@
+program ProjetoBDMG;
+
+uses
+  Vcl.Forms,
+  ufrmMenuPrincipal in 'Formularios\ufrmMenuPrincipal.pas' {frmMenuPrincipal},
+  ufrmLogin in 'Formularios\ufrmLogin.pas' {frmLogin},
+  uRest in 'Units\uRest.pas';
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TfrmMenuPrincipal, frmMenuPrincipal);
+  Application.Run;
+end.

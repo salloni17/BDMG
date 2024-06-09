@@ -1,0 +1,90 @@
+unit Usuario.Controller;
+
+interface
+
+uses
+  Horse,
+  Classes,
+  SysUtils,
+  System.Json,
+  Horse.JWT,
+  JOSE.Core.JWT,
+  JOSE.Core.Builder,
+  System.DateUtils,
+  Usuario.Modelo;
+
+type
+  TUsuarioController = class
+      class procedure Registry;
+      class procedure GetOne(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+      class procedure GetToken(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+  end;
+
+implementation  
+
+{ TUsuarioController }
+
+class procedure TUsuarioController.GetOne(Req: THorseRequest; Res: THorseResponse;
+  Next: TProc);
+var
+  Usuario: TUsuarioModelo;
+  ojson: TJSONObject;
+  login: string;
+begin
+
+  if Req.Params.Count = 0 then
+    raise Exception.Create('Login não encontrado');
+  login := Req.Params.Items['login'];
+  Usuario := TUsuarioModelo.find(login);
+  if Assigned(Usuario) then
+  begin
+    ojson := TJSONObject.Create;
+    ojson.AddPair('id', TJSONNumber.Create(Usuario.codigo));
+    ojson.AddPair('nome', Usuario.login);
+    ojson.AddPair('senha', Usuario.senha);
+    Res.Send<TJSONObject>(oJson).Status(THTTPStatus.OK);
+  end
+  else
+    Res.Send<TJSONObject>(TJSONObject.Create.AddPair('message', 'Usuário não encontrado')).Status(THTTPStatus.NotFound);
+end;
+
+class procedure TUsuarioController.GetToken(Req: THorseRequest;
+  Res: THorseResponse; Next: TProc);
+  var
+    Usuario: TUsuarioModelo;
+    LToken: TJWT;
+    LCompactToken: string;
+    LBody: TJSONObject;
+begin
+  if Req.Body.Trim() = ''  then
+    Res.Send<TJSONObject>(TJSONObject.Create.AddPair('message', 'Usuário não encontrado')).Status(THTTPStatus.NotFound)
+  else
+  begin
+    LBody := Req.Body<TJSONObject>;
+    Usuario := TUsuarioModelo.find(StringReplace(LBody.Values['login'].ToString, '"', '', [rfReplaceAll]));
+    if Assigned(Usuario) then
+    begin
+      if Usuario.senha = StringReplace(LBody.Values['senha'].ToString, '"', '', [rfReplaceAll]) then
+      begin
+        LToken :=  TJWT.Create;
+        LToken.Claims.Expiration := IncHour(Now, 1);
+        LCompactToken := TJOSE.SHA256CompactToken('BBMG', LToken);
+        FreeAndNil(LToken);
+
+        Res.Send<TJSONObject>(TJSONObject.Create.AddPair('token', LCompactToken)).Status(THTTPStatus.Ok);
+      end
+      else
+        Res.Send<TJSONObject>(TJSONObject.Create.AddPair('message', 'Usuário não encontrado')).Status(THTTPStatus.NotFound);
+    end
+    else
+      Res.Send<TJSONObject>(TJSONObject.Create.AddPair('message', 'Usuário não encontrado')).Status(THTTPStatus.NotFound);
+  end;
+end;
+
+class procedure TUsuarioController.Registry;
+begin
+  THorse.Get('/usuario/:login', GetOne);
+  THorse.Post('/login', GetToken);
+end;
+
+end.

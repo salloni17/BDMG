@@ -1,0 +1,25 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Sistema BDMG'
+  ClientHeight = 441
+  ClientWidth = 624
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  Menu = MainMenu1
+  TextHeight = 15
+  object MainMenu1: TMainMenu
+    Left = 40
+    Top = 40
+    object Consultar1: TMenuItem
+      Caption = 'Consultar'
+      object arefas1: TMenuItem
+        Caption = 'Tarefas'
+      end
+    end
+  end
+end

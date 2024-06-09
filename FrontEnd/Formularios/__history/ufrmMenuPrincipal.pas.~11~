@@ -1,0 +1,48 @@
+unit ufrmMenuPrincipal;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus;
+
+type
+  TfrmMenuPrincipal = class(TForm)
+    MainMenu1: TMainMenu;
+    Consultar1: TMenuItem;
+    arefas1: TMenuItem;
+    procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    uToken: string;
+  end;
+
+var
+  frmMenuPrincipal: TfrmMenuPrincipal;
+
+implementation
+
+
+{$R *.dfm}
+
+uses ufrmLogin;
+
+procedure TfrmMenuPrincipal.FormCreate(Sender: TObject);
+begin
+  frmMenuPrincipal.Visible := False;
+  uToken := '';
+  
+  frmLogin := TfrmLogin.Create(self);
+  frmLogin.ShowModal;
+end;
+
+procedure TfrmMenuPrincipal.FormShow(Sender: TObject);
+begin
+  if uToken = '' then
+    frmMenuPrincipal.Close;
+end;
+
+end.

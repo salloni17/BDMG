@@ -1,0 +1,220 @@
+unit Tarefa.Controller;
+
+interface
+
+uses
+  Horse,
+  Classes,
+  SysUtils,
+  System.Json,
+  Horse.JWT,
+  JOSE.Core.JWT,
+  JOSE.Core.Builder,
+  System.DateUtils,
+  Tarefa.Modelo,
+  FireDAC.Comp.Client,
+  Data.DB,
+  Dataset.Serialize;
+
+type
+  TTarefaController = class
+      class procedure Registry;
+      class procedure GetOne(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+      class procedure GetAll(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+      class procedure Insert(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+      class procedure Delete(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+      class procedure Update(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+      class procedure UpdateStatus(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+      class procedure mediaPrioridade(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+      class procedure totalTarefas(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+      class procedure totalTarefasConcluida(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+  end;
+
+implementation
+
+{ TTarefaController }
+
+class procedure TTarefaController.GetOne(Req: THorseRequest; Res: THorseResponse;
+  Next: TProc);
+var
+  qry: TFDQuery;
+  tarefa: TTarefaModelo;
+  ojson: TJSONObject;
+  id: integer;
+begin
+  if Req.Params.Count = 0 then
+    Res.Send<TJSONObject>(TJSONObject.Create.AddPair('message', 'Tarefa não encontrado')).Status(THTTPStatus.NotFound);
+
+  id := StrToInt(Req.Params.Items['id']);
+  tarefa := TTarefaModelo.Create;
+  qry := Tarefa.findOne(id);
+
+  if not qry.IsEmpty then
+    Res.Send<TJSONObject>(qry.ToJSONObject()).Status(THTTPStatus.OK)
+  else
+    Res.Send<TJSONObject>(TJSONObject.Create.AddPair('message', 'Tarefa não encontrado')).Status(THTTPStatus.NotFound);
+end;
+
+class procedure TTarefaController.Delete(Req: THorseRequest;
+  Res: THorseResponse; Next: TProc);
+var
+  tarefa: TTarefaModelo;
+  id: integer;
+begin
+  if Req.Params.Count = 0 then
+    Res.Send<TJSONObject>(TJSONObject.Create.AddPair('message', 'Tarefa não encontrado')).Status(THTTPStatus.NotFound);
+
+  tarefa := TTarefaModelo.Create;
+  tarefa.codigo := Req.Params.Items['id'].ToInteger();
+
+  if Tarefa.delete then
+    Res.Send<TJSONObject>(TJSONObject.Create.AddPair('message', 'Tarefa deletada')).Status(THTTPStatus.Ok)
+  else
+    Res.Send<TJSONObject>(TJSONObject.Create.AddPair('message', 'Erro ao tentar deletar tarefa')).Status(THTTPStatus.BadRequest);  
+end;
+
+class procedure TTarefaController.Insert(Req: THorseRequest;
+  Res: THorseResponse; Next: TProc);
+  var
+    tarefa: TTarefaModelo;
+    LBody, status: TJSONValue;
+begin
+  if Req.Body.Trim() = ''  then
+    Res.Send<TJSONObject>(TJSONObject.Create.AddPair('message', 'Tarefa não encontrado')).Status(THTTPStatus.NotFound)
+  else
+  begin
+    LBody :=  TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(Req.Body), 0) as TJSONValue;
+    tarefa := TTarefaModelo.Create;
+    tarefa.nomeTarefa := LBody.GetValue('nomeTarefa', '');
+    tarefa.status.codigo := 1;
+    tarefa.prioridade := LBody.GetValue('prioridade', '');
+
+    if tarefa.insert then
+      Res.Send<TJSONObject>(TJSONObject.Create.AddPair('message', 'Tarefa inserida com sucesso')).Status(THTTPStatus.Ok)
+    else
+      Res.Send<TJSONObject>(TJSONObject.Create.AddPair('message', 'Erro ao tentar inserir  tarefa')).Status(THTTPStatus.BadRequest);  
+  end;
+
+
+end;
+
+class procedure TTarefaController.mediaPrioridade(Req: THorseRequest;
+  Res: THorseResponse; Next: TProc);
+  var
+    media: string;
+    tarefa: TTarefaModelo;  
+begin
+  tarefa := TTarefaModelo.Create;
+  media := tarefa.mediaPrioridades;
+
+  if media = '' then
+    Res.Send<TJSONObject>(TJSONObject.Create.AddPair('message', 'média não encontrada')).Status(THTTPStatus.NotFound)
+  else
+    Res.Send<TJSONObject>(TJSONObject.Create.AddPair('media', media)).Status(THTTPStatus.OK);
+end;
+
+class procedure TTarefaController.GetAll(Req: THorseRequest;
+  Res: THorseResponse; Next: TProc);
+  var
+    lista: TFDQuery;
+    tarefa: TTarefaModelo;
+begin
+  tarefa := TTarefaModelo.Create;
+  lista := tarefa.findAll;
+
+  if lista.IsEmpty then
+    Res.Send<TJSONObject>(TJSONObject.Create.AddPair('message', 'lista de tarefas não encontrado')).Status(THTTPStatus.NotFound)
+  else
+    Res.Send<TJsonArray>(lista.ToJSONArray()).Status(THTTPStatus.OK);
+end;
+
+class procedure TTarefaController.Registry;
+begin
+  THorse.Get('/tarefa/:id', GetOne);
+  THorse.Get('/tarefa', GetAll);
+  THorse.Delete('/tarefa/:id', delete);
+  THorse.Post('/tarefa', insert);
+  THorse.Put('/tarefa/:id/:status', updateStatus);
+  THorse.Put('/tarefa/', update);
+  THorse.Get('/tarefa/media', mediaPrioridade);
+  THorse.Get('/tarefa/total', totalTarefas) ;
+  THorse.Get('/tarefa/totalConcluida', totalTarefasConcluida) ;
+end;
+
+class procedure TTarefaController.totalTarefas(Req: THorseRequest;
+  Res: THorseResponse; Next: TProc);
+ var
+    total: integer;
+    tarefa: TTarefaModelo;
+begin
+  tarefa := TTarefaModelo.Create;
+  total := tarefa.totalTarefas;
+
+  Res.Send<TJSONObject>(TJSONObject.Create.AddPair('total', total)).Status(THTTPStatus.OK);
+end;
+
+class procedure TTarefaController.totalTarefasConcluida(Req: THorseRequest;
+  Res: THorseResponse; Next: TProc);
+ var
+    total: integer;
+    tarefa: TTarefaModelo;
+begin
+  tarefa := TTarefaModelo.Create;
+  total := tarefa.totalTarefasConcluidas;
+
+  Res.Send<TJSONObject>(TJSONObject.Create.AddPair('total', total)).Status(THTTPStatus.OK);
+end;
+
+class procedure TTarefaController.Update(Req: THorseRequest;
+  Res: THorseResponse; Next: TProc);
+  var
+    tarefa: TTarefaModelo;
+    LBody, status: TJSONValue;
+begin
+  if Req.Body.Trim() = ''  then
+    Res.Send<TJSONObject>(TJSONObject.Create.AddPair('message', 'Tarefa não encontrado')).Status(THTTPStatus.NotFound)
+  else
+  begin
+    LBody := TJSONObject.ParseJSONValue(TEncoding.UTF8.GetBytes(Req.Body), 0) as TJSONValue;
+    tarefa := TTarefaModelo.Create;
+    tarefa.codigo :=  LBody.GetValue('codigo', '').ToInteger();
+    tarefa.nomeTarefa := LBody.GetValue('nomeTarefa', '');
+  
+    status := LBody.GetValue<TJSONValue>('status') as TJSONValue;
+    tarefa.status.codigo := status.GetValue('codigo', '').ToInteger();
+    tarefa.status.nomeStatus := status.GetValue('nomeStatus', '');   
+     
+    tarefa.dataFinalizacao := StrToDateTime(LBody.GetValue('dataFinalizacao', ''));
+    tarefa.prioridade := LBody.GetValue('prioridade', '');
+
+    if tarefa.update then
+      Res.Send<TJSONObject>(TJSONObject.Create.AddPair('message', 'Tarefa atualizada com sucesso')).Status(THTTPStatus.Ok)
+    else
+      Res.Send<TJSONObject>(TJSONObject.Create.AddPair('message', 'Erro ao tentar atualizar tarefa')).Status(THTTPStatus.BadRequest);    
+  end;
+
+end;
+
+class procedure TTarefaController.UpdateStatus(Req: THorseRequest;
+  Res: THorseResponse; Next: TProc);
+  var
+    tarefa: TTarefaModelo;
+    status: TJSONValue;
+begin
+  if Req.Params.Count < 2 then
+    Res.Send<TJSONObject>(TJSONObject.Create.AddPair('message', 'Tarefa não encontrado')).Status(THTTPStatus.NotFound)
+  else
+  begin
+    tarefa := TTarefaModelo.Create;
+    tarefa.codigo :=  StrToInt(Req.Params.Items['id']);
+    tarefa.status.codigo := StrToInt(Req.Params.Items['status']);
+     
+    if tarefa.updateStatus then
+      Res.Send<TJSONObject>(TJSONObject.Create.AddPair('message', 'Tarefa atualizada com sucesso')).Status(THTTPStatus.Ok)
+    else
+      Res.Send<TJSONObject>(TJSONObject.Create.AddPair('message', 'Erro ao tentar atualizar tarefa')).Status(THTTPStatus.BadRequest);    
+  end;
+
+end;
+
+end.

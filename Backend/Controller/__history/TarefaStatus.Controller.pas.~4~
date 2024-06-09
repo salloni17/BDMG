@@ -1,0 +1,72 @@
+unit TarefaStatus.Controller;
+
+interface
+
+uses
+  Horse,
+  Classes,
+  SysUtils,
+  System.Json,
+  Horse.JWT,
+  JOSE.Core.JWT,
+  JOSE.Core.Builder,
+  System.DateUtils,
+  TarefaStatus.Modelo,
+  System.Generics.Collections;
+
+type
+  TTarefaStatusController = class
+      class procedure Registry;
+      class procedure GetOne(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+      class procedure GetAll(Req: THorseRequest; Res: THorseResponse; Next: TProc);
+  end;
+
+implementation
+
+{ TTarefaStatusController }
+
+class procedure TTarefaStatusController.GetOne(Req: THorseRequest; Res: THorseResponse;
+  Next: TProc);
+var
+  tarefaStatus: TTarefaStatusModelo;
+
+  ojson: TJSONObject;
+  id: integer;
+begin
+
+  if Req.Params.Count = 0 then
+    raise Exception.Create('Status não encontrado');
+  id := StrToInt(Req.Params.Items['id']);
+  tarefaStatus := TarefaStatus.find(id);
+  if Assigned(tarefastatus) then
+  begin
+    ojson := TJSONObject.Create;
+    ojson.AddPair('id', TJSONNumber.Create(tarefaStatus.codigo));
+    ojson.AddPair('nomeStatus', tarefaStatus.nomeStatus);
+    Res.Send<TJSONObject>(oJson).Status(THTTPStatus.OK);
+  end
+  else
+    Res.Send<TJSONObject>(TJSONObject.Create.AddPair('message', 'Status não encontrado')).Status(THTTPStatus.NotFound);
+end;
+
+class procedure TTarefaStatusController.GetAll(Req: THorseRequest;
+  Res: THorseResponse; Next: TProc);
+  var
+    lista: TList<TTarefaStatusModelo>;
+begin
+  lista := TList<TTarefaStatusModelo>.Create;
+  lista := TTarefaStatusModelo.findAll;
+
+  if lista.Count = 0 then
+    Res.Send<TJSONObject>(TJSONObject.Create.AddPair('message', 'lista de status não encontrado')).Status(THTTPStatus.NotFound)
+  else
+    Res.Send<TJsonArray>(lista).Status(THTTPStatus.OK);
+end;
+
+class procedure TTarefaStatusController.Registry;
+begin
+  THorse.Get('/tarefastatus/:id', GetOne);
+  THorse.Get('/tarefastatus', GetAll);
+end;
+
+end.

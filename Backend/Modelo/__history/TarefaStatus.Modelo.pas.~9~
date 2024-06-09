@@ -1,0 +1,77 @@
+unit TarefaStatus.Modelo;
+
+interface
+
+uses System.Generics.Collections, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+
+type
+  TTarefaStatusModelo = class
+  private
+    FCodigo: Integer;
+    FNomeStatus: String;
+  public
+    property codigo: integer read FCodigo write FCodigo;
+    property nomeStatus: string read FNomeStatus write FNomeStatus;
+
+    //METODOS
+    class function find(codigo: integer): TTarefaStatusModelo;
+    class function findAll: TList<TTarefaStatusModelo>;
+  end;
+
+implementation
+
+uses udmConexao;
+
+{ TTarefaStatusModelo }
+
+class function TTarefaStatusModelo.find(codigo: integer): TTarefaStatusModelo;
+var
+  qryGenerica: TFDQuery;
+begin
+  Result := TTarefaStatusModelo.Create;
+
+  qryGenerica := TFDQuery.Create(nil);
+  qryGenerica.Connection := dmConexao.fdConnection;
+  qryGenerica.SQL.Text := 'SELECT TS.ID, TS.NOME_STATUS FROM TAREFA_STATUS TS WHERE TS.ID = :codigo';
+  qryGenerica.Params.ParamByName('codigo').AsInteger := codigo;
+  qryGenerica.Open;
+
+  if not qryGenerica.IsEmpty then
+  begin
+    Result.codigo := qryGenerica.FieldByName('ID').AsInteger;
+    Result.nomeStatus := qryGenerica.FieldByName('NOME_STATUS').AsString;
+  end;
+
+  qryGenerica.Close;
+  qryGenerica.Free;
+end;
+
+class function TTarefaStatusModelo.findAll: TList<TTarefaStatusModelo>;
+var
+ qryGenerica: TFDQuery;
+ TarefaStatus: TTarefaStatusModelo;
+begin
+  Result := TList<TTarefaStatusModelo>.Create;
+  qryGenerica := TFDQuery.Create(nil);
+  qryGenerica.Connection := dmConexao.fdConnection;
+  qryGenerica.SQL.Text := 'SELECT TS.ID, TS.NOME_STATUS FROM TAREFA_STATUS TS';
+  qryGenerica.Open;
+  qryGenerica.First;
+
+  while not qryGenerica.Eof do
+  begin
+    TarefaStatus := TTarefaStatusModelo.Create;
+    TarefaStatus.codigo := qryGenerica.FieldByName('ID').AsInteger;
+    TarefaStatus.nomeStatus := qryGenerica.FieldByName('NOME_STATUS').AsString;
+    Result.Add(TarefaStatus);
+    //TarefaStatus.Free;
+    qryGenerica.Next;
+  end;
+
+  qryGenerica.Close;
+  qryGenerica.Free;
+end;
+
+end.

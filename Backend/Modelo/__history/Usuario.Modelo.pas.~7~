@@ -1,0 +1,53 @@
+unit Usuario.Modelo;
+
+interface
+
+uses System.Generics.Collections, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+
+type
+  TUsuarioModelo = class
+  private
+    FCodigo: Integer;
+    FLogin: String;
+    FSenha: String;
+  public
+    property codigo: integer read FCodigo write FCodigo;
+    property login: string read FLogin write FLogin;
+    property senha: string read FSenha write FSenha;
+
+    //METODOS
+    class function find(login: string): TUsuarioModelo;
+  end;
+
+implementation
+
+uses udmConexao;
+
+{ TUsuarioModelo }
+
+class function TUsuarioModelo.find(login: string): TUsuarioModelo;
+var
+  qryGenerica: TFDQuery;
+begin
+  Result := TUsuarioModelo.Create;
+
+  qryGenerica := TFDQuery.Create(nil);
+  qryGenerica.Connection := dmConexao.fdConnection;
+  qryGenerica.SQL.Text := 'SELECT USU.ID, USU.LOGIN, USU.SENHA FROM USUARIO USU WHERE USU.LOGIN = :login';
+  qryGenerica.Params.ParamByName('login').Value := login;
+  qryGenerica.Open;
+
+  if not qryGenerica.IsEmpty then
+  begin
+    Result.codigo := qryGenerica.FieldByName('ID').AsInteger;
+    Result.login := qryGenerica.FieldByName('LOGIN').AsString;
+    Result.senha := qryGenerica.FieldByName('SENHA').AsString;
+  end;
+
+  qryGenerica.Close;
+  qryGenerica.Free;
+end;
+
+end.

@@ -1,0 +1,30 @@
+program Backend;
+
+{$APPTYPE CONSOLE}
+
+{$R *.res}
+
+uses
+  System.SysUtils,
+  System.JSON,
+  Horse,
+  Horse.Jhonson,
+  Horse.JWT,
+  udmConexao in 'Banco\udmConexao.pas' {dmConexao: TDataModule},
+  Usuario.Modelo in 'Modelo\Usuario.Modelo.pas',
+  Usuario.Controller in 'Controller\Usuario.Controller.pas',
+  TarefaStatus.Modelo in 'Modelo\TarefaStatus.Modelo.pas',
+  TarefaStatus.Controller in 'Controller\TarefaStatus.Controller.pas';
+
+begin
+  dmConexao := TdmConexao.Create(nil);
+  //middlewares
+  THorse.Use(Jhonson);
+  THorse.Use(HorseJWT('BBMG',  THorseJWTConfig.New.SkipRoutes(['/','login'])));
+
+  //Controllers
+  TUsuarioController.Registry;
+  TTarefaStatusController.Registry;
+
+  THorse.Listen(9000);
+end.

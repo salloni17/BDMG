@@ -1,0 +1,50 @@
+object frmGraficos: TfrmGraficos
+  Left = 0
+  Top = 0
+  Caption = 'Relat'#243'rio'
+  ClientHeight = 441
+  ClientWidth = 624
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  Position = poMainFormCenter
+  TextHeight = 15
+  object Chart1: TChart
+    Left = 0
+    Top = 0
+    Width = 625
+    Height = 329
+    Title.Text.Strings = (
+      'TChart')
+    TabOrder = 0
+    DefaultCanvas = 'TGDIPlusCanvas'
+    ColorPaletteIndex = 13
+  end
+  object fdPizza: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 512
+    Top = 96
+    object fdPizzaPRIORIDADE: TStringField
+      FieldName = 'PRIORIDADE'
+      Size = 50
+    end
+    object fdPizzaMEDIA_TAREFA: TStringField
+      FieldName = 'MEDIA_TAREFA'
+      Size = 5
+    end
+  end
+  object dsPizza: TDataSource
+    DataSet = fdPizza
+    Left = 512
+    Top = 152
+  end
+end

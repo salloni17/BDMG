@@ -1,0 +1,51 @@
+unit Usuario.Modelo;
+
+interface
+
+uses Model.Connection, FireDAC.Comp.Client, Data.DB;
+
+type
+  TUsuarioModelo = class
+  private
+    FCodigo: Integer;
+    FLogin: String;
+    FSenha: String;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    property codigo: integer read FCodigo write FCodigo;
+    property login: string read FLogin write FLogin;
+    property senha: string read FSenha write FSenha;
+
+    //METODOS
+    function find(login: string): TFDQuery;
+  end;
+
+implementation
+
+{ TUsuarioModelo }
+
+constructor TUsuarioModelo.Create;
+begin
+  Model.Connection.Connect;
+end;
+
+destructor TUsuarioModelo.Destroy;
+begin
+  Model.Connection.Disconect;
+end;
+
+function TUsuarioModelo.find(login: string): TFDQuery;
+var
+  qryGenerica: TFDQuery;
+begin
+  qryGenerica := TFDQuery.Create(nil);
+  qryGenerica.Connection := Model.Connection.FConnection;
+  qryGenerica.SQL.Text := 'SELECT USU.ID, USU.LOGIN, USU.SENHA FROM USUARIO USU WHERE USU.LOGIN = :login';
+  qryGenerica.Params.ParamByName('login').AsString := login;
+  qryGenerica.Open;
+
+  Result := qryGenerica;
+end;
+
+end.

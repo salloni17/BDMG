@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2024/06/07 09:40:37.000.418,C:\Users\Montreal\Desktop\BBMG\BBMG.dproj=C:\Users\Montreal\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2024/06/07 09:40:58.000.928,C:\Users\Montreal\Desktop\BBMG\Backend.dproj=C:\Users\Montreal\Desktop\BBMG\BBMG.dproj</Transaction>
+    <Transaction>2024/06/07 10:23:50.000.077,=C:\Users\Montreal\Desktop\BBMG\Unit2.pas</Transaction>
+    <Transaction>2024/06/07 10:25:38.000.490,=C:\Users\Montreal\Desktop\BBMG\Unit1.pas</Transaction>
+    <Transaction>2024/06/07 10:46:51.000.605,C:\Users\Montreal\Desktop\BBMG\Banco\udmConexao.dfm=C:\Users\Montreal\Desktop\BBMG\Unit2.dfm</Transaction>
+    <Transaction>2024/06/07 10:46:51.000.605,C:\Users\Montreal\Desktop\BBMG\Banco\udmConexao.pas=C:\Users\Montreal\Desktop\BBMG\Unit2.pas</Transaction>
+    <Transaction>2024/06/07 10:48:53.000.066,=C:\Users\Montreal\Desktop\BBMG\Unit1.pas</Transaction>
+    <Transaction>2024/06/07 10:48:58.000.665,C:\Users\Montreal\Desktop\BBMG\Modelo.pas=C:\Users\Montreal\Desktop\BBMG\Unit1.pas</Transaction>
+    <Transaction>2024/06/07 10:49:11.000.669,C:\Users\Montreal\Desktop\BBMG\Modelo.pas=</Transaction>
+    <Transaction>2024/06/07 10:49:18.000.815,=C:\Users\Montreal\Desktop\BBMG\Unit1.pas</Transaction>
+    <Transaction>2024/06/07 10:49:47.000.648,C:\Users\Montreal\Desktop\BBMG\Modelo\Usuario.Model.pas=C:\Users\Montreal\Desktop\BBMG\Unit1.pas</Transaction>
+    <Transaction>2024/06/07 10:50:02.000.874,C:\Users\Montreal\Desktop\BBMG\Modelo\Usuario.Modelo.pas=C:\Users\Montreal\Desktop\BBMG\Modelo\Usuario.Model.pas</Transaction>
+    <Transaction>2024/06/07 11:43:16.000.814,=C:\Users\Montreal\Desktop\BBMG\Unit1.pas</Transaction>
+    <Transaction>2024/06/07 11:48:35.000.943,=C:\Users\Montreal\Desktop\BBMG\Unit1.pas</Transaction>
+    <Transaction>2024/06/07 11:48:45.000.105,C:\Users\Montreal\Desktop\BBMG\Controller.pas=C:\Users\Montreal\Desktop\BBMG\Unit1.pas</Transaction>
+    <Transaction>2024/06/07 11:48:50.000.866,C:\Users\Montreal\Desktop\BBMG\Controller.pas=</Transaction>
+    <Transaction>2024/06/07 11:48:54.000.521,=C:\Users\Montreal\Desktop\BBMG\Unit1.pas</Transaction>
+    <Transaction>2024/06/07 11:49:09.000.193,C:\Users\Montreal\Desktop\BBMG\Controller\Usuario.Controller.pas=C:\Users\Montreal\Desktop\BBMG\Unit1.pas</Transaction>
+    <Transaction>2024/06/07 17:11:22.000.104,=C:\Users\Montreal\Desktop\BBMG\Unit1.pas</Transaction>
+    <Transaction>2024/06/07 17:14:02.000.837,C:\Users\Montreal\Desktop\BBMG\Modelo\TarefaStatus.Modelo.pas=C:\Users\Montreal\Desktop\BBMG\Unit1.pas</Transaction>
+    <Transaction>2024/06/07 17:33:28.000.729,=C:\Users\Montreal\Desktop\BBMG\Unit1.pas</Transaction>
+    <Transaction>2024/06/07 17:33:47.000.614,C:\Users\Montreal\Desktop\BBMG\Controller\TarefaStatus.Controller.pas=C:\Users\Montreal\Desktop\BBMG\Unit1.pas</Transaction>
+    <Transaction>2024/06/07 17:42:50.000.161,=C:\Users\Montreal\Desktop\BBMG\Unit1.pas</Transaction>
+    <Transaction>2024/06/08 11:15:20.000.949,=C:\Users\Montreal\Desktop\BBMG\Unit1.pas</Transaction>
+    <Transaction>2024/06/08 11:15:42.000.015,=C:\Users\Montreal\Desktop\BBMG\Modelo\Tarefa.Modelo.pas</Transaction>
+    <Transaction>2024/06/08 11:17:09.000.921,=C:\Users\Montreal\Desktop\BBMG\Controller\Tarefa.Controller.pas</Transaction>
+    <Transaction>2024/06/08 11:31:29.000.300,=C:\Users\Montreal\Desktop\BBMG\Controller\Controller.Cliente.pas</Transaction>
+    <Transaction>2024/06/08 11:31:37.000.309,C:\Users\Montreal\Desktop\BBMG\Controller\Controller.Cliente.pas=</Transaction>
+    <Transaction>2024/06/08 11:32:08.000.110,=C:\Users\Montreal\Desktop\BBMG\Modelo\Model.Connection.pas</Transaction>
+    <Transaction>2024/06/08 15:29:22.000.117,C:\Users\Montreal\Desktop\BDMG\Backend\Banco\udmConexao.pas=</Transaction>
+  </Transactions>
+</BorlandProject>
